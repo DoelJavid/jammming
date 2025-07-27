@@ -39,14 +39,15 @@
   @param {string} props.author
   @param {string} props.title
   @param {boolean} props.inPlaylist
+  @param {(e: PointerEvent) => void} props.onButtonClick
   @returns {JSX.Element}
 */
-function Playlist({artist, name, inPlaylist}) {
+function Playlist({artist, name, inPlaylist, onButtonClick}) {
   return (
     <div class="track">
       <h3>{name}</h3>
       <p>by {artist}</p>
-      <button>{inPlaylist ? "Remove from Playlist" : "Add to Playlist"}</button>
+      <button onClick={onButtonClick}>{inPlaylist ? "Remove from Playlist" : "Add to Playlist"}</button>
     </div>
   );
 }

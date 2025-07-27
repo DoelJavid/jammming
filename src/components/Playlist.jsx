@@ -11,9 +11,10 @@ import Track from "./Track";
 
   @param {Object} props
   @param {(Track | Track[])?} props.tracks
+  @param {(idx: number) => void} props.onRemoveTrack
   @returns {JSX.Element}
 */
-function Playlist({tracks}) {
+function Playlist({tracks, onRemoveTrack}) {
   let playlist = tracks;
   if (!(playlist instanceof Array)) {
     playlist = playlist ? [playlist] : [];
@@ -24,9 +25,14 @@ function Playlist({tracks}) {
       <h2>Playlist Title</h2>
 
       <ul>
-        {playlist.map((track) => (
+        {playlist.map((track, idx) => (
           <li key={`playlist_${track.artist}_${track.id}`}>
-            <Track name={track.name} artist={track.artist} inPlaylist={true} />
+            <Track
+              name={track.name}
+              artist={track.artist}
+              inPlaylist={true}
+              onButtonClick={() => onRemoveTrack(idx)}
+            />
           </li>
         ))}
       </ul>

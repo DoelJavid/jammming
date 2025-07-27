@@ -1,5 +1,5 @@
 
-import {useState} from "react";
+import {useCallback, useState} from "react";
 import Tracklist from "./components/Tracklist";
 import Playlist from "./components/Playlist";
 import "./App.css";
@@ -44,10 +44,33 @@ function App() {
   ]);
   const [playlist, setPlaylist] = useState([]);
 
+  /**
+    Event handler to handle adding tracks to the playlist.
+    @type {(idx: number) => void}
+  */
+  const handleAdd = useCallback((idx) => {
+    setPlaylist((playlistData) => {
+      if (!playlistData.find((track) => track.id === tracklist[idx].id)) {
+        return [tracklist[idx], ...playlistData];
+      }
+      return playlistData;
+    });
+  }, [tracklist, playlist]);
+
+  /**
+    Event handler to handle removing tracks from the playlist.
+    @type {(idx: number) => void}
+  */
+  const handleRemove = useCallback((idx) => setPlaylist(
+    (playlistData) => playlistData.filter(
+      (_, playlistIdx) => playlistIdx !== idx
+    )
+  ), [playlist]);
+
   return (
     <div>
-      <Tracklist tracks={tracklist} />
-      <Playlist tracks={playlist} />
+      <Tracklist tracks={tracklist} onAddTrack={handleAdd} />
+      <Playlist tracks={playlist} onRemoveTrack={handleRemove} />
     </div>
   );
 }

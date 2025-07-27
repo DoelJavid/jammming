@@ -11,9 +11,10 @@ import Track from "./Track"
 
   @param {Object} props
   @param {(Track | Track[])?} props.tracks
+  @param {(idx: number) => void} props.onAddTrack
   @returns {JSX.Element}
 */
-function Tracklist({tracks}) {
+function Tracklist({tracks, onAddTrack}) {
   let tracksList = tracks;
   if (!(tracksList instanceof Array)) {
     tracksList = tracklist ? [tracksList] : [];
@@ -23,7 +24,12 @@ function Tracklist({tracks}) {
     <ul>
       {tracksList.map((track, idx) => (
         <li key={`${track.artist}_${track.id}`}>
-          <Track name={track.name} artist={track.artist} inPlaylist={false} />
+          <Track
+            name={track.name}
+            artist={track.artist}
+            inPlaylist={false}
+            onButtonClick={() => onAddTrack(idx)}
+          />
         </li>
       ))}
     </ul>
