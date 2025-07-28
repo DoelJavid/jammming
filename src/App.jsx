@@ -43,6 +43,7 @@ function App() {
     }
   ]);
   const [playlist, setPlaylist] = useState([]);
+  const [playlistName, setPlaylistName] = useState("Your Playlist");
 
   /**
     Event handler to handle adding tracks to the playlist.
@@ -67,10 +68,18 @@ function App() {
     )
   ), [playlist]);
 
+  /**
+    Event handler to handle renaming the playlist.
+    @type {(newName: string) => void}
+  */
+  const handleRename = useCallback((newName) => {
+    setPlaylistName(newName);
+  }, []);
+
   return (
     <div>
       <Tracklist tracks={tracklist} onAddTrack={handleAdd} />
-      <Playlist tracks={playlist} onRemoveTrack={handleRemove} />
+      <Playlist name={playlistName} tracks={playlist} onRemoveTrack={handleRemove} onRename={handleRename} />
     </div>
   );
 }
