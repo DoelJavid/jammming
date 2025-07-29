@@ -3,6 +3,7 @@ import {useCallback, useState} from "react";
 import {getAccessToken} from "./utilities/authorization";
 import Tracklist from "./components/Tracklist";
 import Playlist from "./components/Playlist";
+import SearchBar from "./components/SearchBar";
 import "./App.css";
 
 /**
@@ -72,6 +73,14 @@ function App() {
   ), [playlist]);
 
   /**
+    Event handler to handle searching tracks in Spotify.
+    @type {(query: string) => void}
+  */
+  const handleSearch = useCallback((query) => {
+    console.log(query);
+  }, []);
+
+  /**
     Event handler to handle renaming the playlist.
     @type {(newName: string) => void}
   */
@@ -81,6 +90,7 @@ function App() {
 
   return (
     <div>
+      <SearchBar onSearch={handleSearch} />
       <Tracklist tracks={tracklist} onAddTrack={handleAdd} />
       <Playlist name={playlistName} tracks={playlist} onRemoveTrack={handleRemove} onRename={handleRename} />
     </div>
