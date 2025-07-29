@@ -1,5 +1,6 @@
 
 import {useCallback, useState} from "react";
+import {getAccessToken} from "./utilities/authorization";
 import Tracklist from "./components/Tracklist";
 import Playlist from "./components/Playlist";
 import "./App.css";
@@ -15,6 +16,8 @@ import "./App.css";
   @returns {JSX.Element}
 */
 function App() {
+  getAccessToken();
+
   // Hardcoded array of tracks to test the track list.
   const [tracklist, setTracklist] = useState([
     {
