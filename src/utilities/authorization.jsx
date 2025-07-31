@@ -45,7 +45,7 @@ function base64Encode(input) {
   @returns {Promise}
 */
 export async function redirectToAuthCodeFlow() {
-  codeVerifier = generateRandomString(64);
+  const codeVerifier = generateRandomString(64);
   const hashedVerifier = await sha256(codeVerifier);
   const codeChallenge = base64Encode(hashedVerifier);
   const authUrl = new URL("https://accounts.spotify.com/authorize");
@@ -61,6 +61,7 @@ export async function redirectToAuthCodeFlow() {
     redirect_uri: REDIRECT_URI
   };
 
+  console.log("Redirecting to auth code flow...");
   authUrl.search = new URLSearchParams(params).toString();
   window.location.href = authUrl;
 }
@@ -97,10 +98,13 @@ export async function authenticateUser(code) {
     localStorage.setItem("access_token", response.access_token);
     localStorage.setItem("expire_date", Date.now() + response.expires_in);
     localStorage.setItem("refresh_token", response.refresh_token);
+
     console.log("User has been authorized successfully!");
 
     return response.access_token;
   }
+
+  console.log("Unable to authenticate user.");
 }
 
 /**
@@ -139,9 +143,11 @@ export async function refreshAuthToken() {
         localStorage.setItem("refresh_token", response.refresh_token);
       }
 
+      console.log("Access token refreshed.");
+
       return response.access_token;
     } else {
-       return accessToken;
+      return accessToken;
     }
   }
 }
@@ -171,15 +177,13 @@ export async function getAccessToken() {
     throw new Error(`An error has occured!\n${errorString}`);
   }
 
-  if (codeVerifier && code) {
-    try {
-      accessToken = await authenticateUser();
-      if (accessToken) {
-        return accessToken;
-      }
-    } catch (err) {
-      console.error(`An error has occured!\n${err}`);
+  try {
+    accessToken = await authenticateUser(code);
+    if (accessToken) {
+      return accessToken;
     }
+  } catch (err) {
+    throw Error(`An error has occured!\n${err}`);
   }
 
   // Redirect the user to the spotify authorization page if all else fails.
