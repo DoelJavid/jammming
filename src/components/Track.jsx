@@ -44,7 +44,7 @@
 */
 function Playlist({artist, name, inPlaylist, onButtonClick}) {
   return (
-    <div class="track">
+    <div className="track">
       <h3>{name}</h3>
       <p>by {artist}</p>
       <button onClick={onButtonClick}>{inPlaylist ? "Remove from Playlist" : "Add to Playlist"}</button>
