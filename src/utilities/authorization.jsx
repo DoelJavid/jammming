@@ -4,6 +4,15 @@ const REDIRECT_URI = import.meta.env.VITE_SPOTIFY_REDIRECT_URL;
 const AUTH_SCOPE = "user-read-private user-read-email";
 
 /**
+  Authentication error type for when authentication errors occur.
+*/
+class AuthError extends Error {
+  constructor(message, options) {
+    super(message, options);
+  }
+}
+
+/**
   Generates a random string of characters with the given length
 
   @param {number} length
@@ -92,7 +101,11 @@ export async function authenticateUser(code) {
     const response = await result.json();
 
     if (response.error) {
-      throw Error(`${response.error}: ${response.error_description}`);
+      if (response.error === "invalid_grant") {
+        throw new AuthError(response.error_description);
+      } else {
+        throw Error(`${response.error}: ${response.error_description}`);
+      }
     }
 
     localStorage.setItem("access_token", response.access_token);
@@ -105,6 +118,7 @@ export async function authenticateUser(code) {
   }
 
   console.log("Unable to authenticate user.");
+  return null;
 }
 
 /**
@@ -150,6 +164,8 @@ export async function refreshAuthToken() {
       return accessToken;
     }
   }
+
+  return null;
 }
 
 /**
@@ -163,7 +179,8 @@ export async function refreshAuthToken() {
 export async function getAccessToken() {
   // We need to refresh the access token if it expires.
   let accessToken = await refreshAuthToken();
-  if (accessToken) {
+  if (accessToken && accessToken !== "undefined") {
+    console.log(accessToken);
     return accessToken;
   }
 
@@ -183,10 +200,11 @@ export async function getAccessToken() {
       return accessToken;
     }
   } catch (err) {
-    throw Error(`An error has occured!\n${err}`);
+    if (err instanceof AuthError) {
+      redirectToAuthCodeFlow();
+    } else {
+      console.error(`An error has occured!\n${err}`);
+    }
   }
-
-  // Redirect the user to the spotify authorization page if all else fails.
-  redirectToAuthCodeFlow();
 }
 
