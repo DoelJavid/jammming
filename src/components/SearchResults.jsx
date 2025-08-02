@@ -79,7 +79,8 @@ function SearchResults({query, onAddTrack}) {
           ({
             artist: unwrapNames(track.artists ? track.artists.map((artist) => artist.name) : ""),
             name: track.name,
-            id: track.id
+            id: track.id,
+            uri: track.uri
           })
         ));
       });

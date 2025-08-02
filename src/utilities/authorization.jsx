@@ -1,7 +1,38 @@
 
 const CLIENT_ID = import.meta.env.VITE_SPOTIFY_CLIENT_ID;
 const REDIRECT_URI = import.meta.env.VITE_SPOTIFY_REDIRECT_URL;
-const AUTH_SCOPE = "user-read-private user-read-email";
+const AUTH_SCOPE = "user-read-private user-read-email playlist-modify-private";
+
+/**
+  Type Definitions
+
+  @typedef {{
+    country: string;
+    display_name: string;
+    email: string;
+    explicit_content: {
+      filter_enabled: boolean;
+      filter_locked: boolean;
+    };
+    external_urls: {
+      spotify: string;
+    };
+    followers: {
+      href: string;
+      total: number;
+    };
+    href: string;
+    id: string;
+    images: {
+      url: string;
+      height: number;
+      width: number;
+    };
+    product: string;
+    type: string;
+    uri: string;
+  }} ProfileData
+*/
 
 /**
   Authentication error type for when authentication errors occur.
@@ -132,7 +163,7 @@ export async function authenticateUser(code) {
 */
 export async function refreshAuthToken() {
   const accessToken = localStorage.getItem("access_token");
-  
+
   if (accessToken) {
     const expireDate = localStorage.getItem("expire_date");
 
@@ -219,7 +250,30 @@ export async function getAccessToken() {
       redirectToAuthCodeFlow();
     } else {
       console.error(`An error has occured!\n${err}`);
+      return null;
     }
   }
+
+  redirectToAuthCodeFlow();
+}
+
+/**
+  Shortcut function that returns the user's profile data.
+
+  @returns {Promise<ProfileData>}
+*/
+export async function getUserProfile() {
+  const accessToken = await getAccessToken();
+  const result = await fetch("https://api.spotify.com/v1/me", {
+    headers: {
+      "Authorization": `Bearer ${accessToken}`
+    }
+  });
+
+  if (!result.ok) {
+    throw Error("Unable to get profile!");
+  }
+
+  return await result.json();
 }
 
