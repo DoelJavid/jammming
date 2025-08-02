@@ -36,21 +36,23 @@
   Singular track component that contains a single track.
 
   @param {Object} props
-  @param {string} props.author
-  @param {string} props.title
+  @param {string[] | string} props.artist
+  @param {string} props.name
   @param {boolean} props.inPlaylist
   @param {(e: PointerEvent) => void} props.onButtonClick
   @returns {JSX.Element}
 */
-function Playlist({artist, name, inPlaylist, onButtonClick}) {
+function Track({artist, name, inPlaylist, onButtonClick}) {
   return (
     <div className="track">
       <h3>{name}</h3>
       <p>by {artist}</p>
-      <button onClick={onButtonClick}>{inPlaylist ? "Remove from Playlist" : "Add to Playlist"}</button>
+      <button onClick={onButtonClick}>
+        {inPlaylist ? "Remove from Playlist" : "Add to Playlist"}
+      </button>
     </div>
   );
 }
 
-export default Playlist;
+export default Track;
 

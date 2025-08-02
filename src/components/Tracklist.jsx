@@ -17,7 +17,7 @@ import Track from "./Track"
 function Tracklist({tracks, onAddTrack}) {
   let tracksList = tracks;
   if (!(tracksList instanceof Array)) {
-    tracksList = tracklist ? [tracksList] : [];
+    tracksList = tracksList ? [tracksList] : [];
   }
 
   return (
@@ -28,7 +28,7 @@ function Tracklist({tracks, onAddTrack}) {
             name={track.name}
             artist={track.artist}
             inPlaylist={false}
-            onButtonClick={() => onAddTrack(idx)}
+            onButtonClick={() => onAddTrack(track)}
           />
         </li>
       ))}
