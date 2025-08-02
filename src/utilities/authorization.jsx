@@ -185,13 +185,24 @@ export async function getAccessToken() {
   }
 
   // If there is no access token, we need to create a new access token.
+  // Spotify sends the authentication code through search parameters.
   const urlParams = new URLSearchParams(window.location.search);
   const errorString = urlParams.get("error");
   let code = urlParams.get("code");
   let codeVerifier = localStorage.getItem("spotify_auth_state");
 
+  // Spotify also sends errors through the search parameters.
   if (errorString) {
-    throw new Error(`An error has occured!\n${errorString}`);
+    throw Error(`An error has occured!\n${errorString}`);
+  }
+
+  if (code) {
+    // Store the code in local storage and wipe the URL clean.
+    localStorage.setItem("auth_code", code);
+    history.replaceState(null, "", REDIRECT_URI);
+  } else {
+    // Get the auth code from local storage.
+    code = localStorage.getItem("auth_code");
   }
 
   try {
