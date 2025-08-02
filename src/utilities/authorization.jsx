@@ -108,8 +108,9 @@ export async function authenticateUser(code) {
       }
     }
 
+    // Date.now() is in milliseconds while the expire date is stored in seconds.
+    localStorage.setItem("expire_date", Date.now() + response.expires_in * 1000);
     localStorage.setItem("access_token", response.access_token);
-    localStorage.setItem("expire_date", Date.now() + response.expires_in);
     localStorage.setItem("refresh_token", response.refresh_token);
 
     console.log("User has been authorized successfully!");
@@ -131,7 +132,7 @@ export async function authenticateUser(code) {
 */
 export async function refreshAuthToken() {
   const accessToken = localStorage.getItem("access_token");
-
+  
   if (accessToken) {
     const expireDate = localStorage.getItem("expire_date");
 
@@ -150,6 +151,11 @@ export async function refreshAuthToken() {
       });
       const response = await result.json();
 
+      // Fallback to the original access token if an error is thrown.
+      if (response.error) {
+        return localStorage.getItem("access_token");
+      }
+
       localStorage.setItem("access_token", response.access_token);
       localStorage.setItem("expire_date", Date.now() + response.expires_in);
 
@@ -158,7 +164,6 @@ export async function refreshAuthToken() {
       }
 
       console.log("Access token refreshed.");
-
       return response.access_token;
     } else {
       return accessToken;
@@ -180,7 +185,6 @@ export async function getAccessToken() {
   // We need to refresh the access token if it expires.
   let accessToken = await refreshAuthToken();
   if (accessToken && accessToken !== "undefined") {
-    console.log(accessToken);
     return accessToken;
   }
 
