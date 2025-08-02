@@ -22,8 +22,6 @@ const MAX_PAGE_SIZE = 10;
   @returns {string}
 */
 function unwrapNames(names) {
-  console.log(names);
-
   if (names instanceof Array) {
     switch (names.length) {
     case 0:
