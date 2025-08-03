@@ -4,7 +4,6 @@ import {getAccessToken} from "./utilities/authorization";
 import SearchResults from "./components/SearchResults";
 import Playlist from "./components/Playlist";
 import SearchBar from "./components/SearchBar";
-import "./App.css";
 
 /**
   @import {Track} from "./Track"
@@ -90,11 +89,14 @@ function App() {
   }, []);
 
   return (
-    <div>
+    <>
+      <h1>Ja<span style={{color: "var(--accent-color)"}}>mmm</span>ing</h1>
       <SearchBar onSearch={handleSearch} />
-      <SearchResults query={query} onAddTrack={handleAdd} />
-      <Playlist name={playlistName} tracks={playlist} onRemoveTrack={handleRemove} onRename={handleRename} />
-    </div>
+      <div className="h-box">
+        <SearchResults query={query} onAddTrack={handleAdd} />
+        <Playlist name={playlistName} tracks={playlist} onRemoveTrack={handleRemove} onRename={handleRename} />
+      </div>
+    </>
   );
 }
 

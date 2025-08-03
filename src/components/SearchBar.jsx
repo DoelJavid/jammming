@@ -1,5 +1,6 @@
 
 import {useState} from "react";
+import styles from "./SearchBar.module.css";
 
 /**
   @import {JSX} from "react";
@@ -14,17 +15,17 @@ import {useState} from "react";
 */
 function SearchBar({onSearch}) {
   const [searchQuery, setSearchQuery] = useState("");
-
+  
   return (
-    <div className="search">
+    <div className={styles.search}>
       <input
-        className="search-input"
+        className={styles.input}
         value={searchQuery}
         placeholder="Search"
         onKeyDown={(e) => (e.key === "Enter" || e.code === 13) && onSearch(searchQuery)}
         onChange={(e) => setSearchQuery(e.target.value)}
       />
-      <button className="search-button" onClick={() => onSearch(searchQuery)}>Search</button>
+      <button className={styles.button} onClick={() => onSearch(searchQuery)}>Search</button>
     </div>
   );
 }

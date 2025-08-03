@@ -1,4 +1,6 @@
 
+import styles from "./Track.module.css";
+
 /**
   @import {JSX} from "react"
 
@@ -44,12 +46,15 @@
 */
 function Track({artist, name, inPlaylist, onButtonClick}) {
   return (
-    <div className="track">
-      <h3>{name}</h3>
-      <p>by {artist}</p>
-      <button onClick={onButtonClick}>
-        {inPlaylist ? "Remove from Playlist" : "Add to Playlist"}
-      </button>
+    <div className={styles.track}>
+      <img className={styles.thumbnail} src="" alt="" />
+      <div className={styles.info}>
+        <h3 className={styles.title}>{name}</h3>
+        <p className={styles.author}>by {artist}</p>
+        <button className={styles.button} onClick={onButtonClick}>
+          {inPlaylist ? "Remove from Playlist" : "Add to Playlist"}
+        </button>
+      </div>
     </div>
   );
 }

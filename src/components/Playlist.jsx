@@ -1,6 +1,7 @@
 
 import {useCallback, useState} from "react";
 import Track from "./Track";
+import Tracklist from "./Tracklist";
 import {getAccessToken, getUserProfile} from "../utilities/authorization";
 
 /**
@@ -110,7 +111,16 @@ function Playlist({name, tracks, onRemoveTrack, onRename}) {
         </h2>
       )}
 
-      <ul>
+      <Tracklist
+        tracks={tracks}
+        inPlaylist={true}
+        onInteract={(track) =>
+          onRemoveTrack(
+            playlist.findIndex((playlistTrack) => playlistTrack.id === track.id)
+          )
+        }
+      />
+      {/*<ul>
         {playlist.map((track, idx) => (
           <li key={`playlist_${track.artist}_${track.id}`}>
             <Track
@@ -121,7 +131,7 @@ function Playlist({name, tracks, onRemoveTrack, onRename}) {
             />
           </li>
         ))}
-      </ul>
+      </ul>*/}
 
       <button onClick={handleSave}>Save to Spotify</button>
     </div>

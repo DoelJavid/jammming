@@ -89,8 +89,8 @@ function SearchResults({query, onAddTrack}) {
 
   return (
     <div className="search-results">
-      <Tracklist tracks={results} onAddTrack={onAddTrack} />
       <h2>Search Results</h2>
+      <Tracklist tracks={results} onInteract={onAddTrack} />
     </div>
   );
 }

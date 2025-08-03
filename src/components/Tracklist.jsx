@@ -1,5 +1,6 @@
 
-import Track from "./Track"
+import Track from "./Track";
+import styles from "./Tracklist.module.css";
 
 /**
   @import {JSX} from "react"
@@ -11,24 +12,25 @@ import Track from "./Track"
 
   @param {Object} props
   @param {(Track | Track[])?} props.tracks
-  @param {(idx: number) => void} props.onAddTrack
+  @param {boolean} props.inPlaylist
+  @param {(idx: number) => void} props.onInteract
   @returns {JSX.Element}
 */
-function Tracklist({tracks, onAddTrack}) {
+function Tracklist({tracks, inPlaylist, onInteract}) {
   let tracksList = tracks;
   if (!(tracksList instanceof Array)) {
     tracksList = tracksList ? [tracksList] : [];
   }
 
   return (
-    <ul>
+    <ul className={styles.tracklist}>
       {tracksList.map((track, idx) => (
-        <li key={`${track.artist}_${track.id}`}>
+        <li key={`${track.artist}_${track.id}`} className={styles.listitem}>
           <Track
             name={track.name}
             artist={track.artist}
-            inPlaylist={false}
-            onButtonClick={() => onAddTrack(track)}
+            inPlaylist={inPlaylist}
+            onButtonClick={() => onInteract(track)}
           />
         </li>
       ))}
