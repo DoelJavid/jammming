@@ -28,8 +28,17 @@ body {
 }
 
 h1 {
-  font-size: 3.2em;
+  font-size: 2rem;
   line-height: 1.1;
+}
+
+h2 {
+  display: block;
+  width: 100%;
+  margin: 1rem 0;
+  padding: 0 1rem;
+  font-size: 1.5rem;
+  text-align: left;
 }
 
 a {
@@ -64,11 +73,13 @@ button:focus-visible {
 .h-box {
   display: flex;
   flex-flow: row nowrap;
-  width: calc(100% - 40px);
+  gap: 2rem;
+  width: calc(100vw - 10rem);
   max-width: 700px;
   margin: 0 auto;
 }
-.h-box * {
+
+.h-box > * {
   width: 50%;
 }
 

@@ -3,6 +3,7 @@ import {useCallback, useState} from "react";
 import Track from "./Track";
 import Tracklist from "./Tracklist";
 import {getAccessToken, getUserProfile} from "../utilities/authorization";
+import styles from "./Playlist.module.css";
 
 /**
   @import {JSX} from "react"
@@ -92,10 +93,10 @@ function Playlist({name, tracks, onRemoveTrack, onRename}) {
   }, [name, playlist]);
 
   return (
-    <div className="playlist">
+    <div>
       {editName ? (
         <input
-          className="playlist-name"
+          className={styles.title}
           value={name}
           onChange={(e) => onRename(e.target.value)}
           onKeyDown={(e) => (e.key === "Enter" || e.code === 13) && setEditName(false)}
@@ -103,10 +104,10 @@ function Playlist({name, tracks, onRemoveTrack, onRename}) {
           autoFocus
         />
       ) : (
-        <h2 className="playlist-name">
+        <h2 className={styles.title}>
           {name}
-          <button className="playlist-edit-name" onClick={() => setEditName(true)}>
-            Set Name
+          <button className={styles.rename} onClick={() => setEditName(true)}>
+            Edit Name
           </button>
         </h2>
       )}
@@ -120,18 +121,6 @@ function Playlist({name, tracks, onRemoveTrack, onRename}) {
           )
         }
       />
-      {/*<ul>
-        {playlist.map((track, idx) => (
-          <li key={`playlist_${track.artist}_${track.id}`}>
-            <Track
-              name={track.name}
-              artist={track.artist}
-              inPlaylist={true}
-              onButtonClick={() => onRemoveTrack(idx)}
-            />
-          </li>
-        ))}
-      </ul>*/}
 
       <button onClick={handleSave}>Save to Spotify</button>
     </div>

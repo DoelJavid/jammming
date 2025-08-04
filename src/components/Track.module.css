@@ -11,6 +11,7 @@
 }
 
 .thumbnail {
+  display: none;
   width: auto;
   height: 100%;
   margin: 0.5rem;
@@ -21,7 +22,7 @@
 }
 
 .info {
-  width: 100%;
+  width: auto;
   height: 100%;
   margin: 0.5rem;
 }
@@ -31,7 +32,7 @@
   width: 100%;
   height: 1.8rem;
   margin: 0 0 0.5rem;
-  font-size: 1.2rem;
+  font-size: 1rem;
   text-align: center;
   text-overflow: "...";
   overflow: hidden;
@@ -43,14 +44,27 @@
   height: 1rem;
   margin: 0.5rem 0;
   opacity: 75%;
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   text-overflow: "...";
   overflow: hidden;
 }
 
 .button {
-  width: 140px;
+  width: 125px;
   padding: 0.5rem;
-  font-size: 0.8rem;
+  font-size: 0.7rem;
+}
+
+@media (min-width: 708px) {
+  .thumbnail {
+    display: inline-block;
+  }
+
+  .author, .button {
+    font-size: 0.8rem;
+  }
+  .button {
+    width: 140px;
+  }
 }
 

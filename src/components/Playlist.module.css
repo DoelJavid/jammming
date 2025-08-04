@@ -1,0 +1,26 @@
+
+/* A good chunk of this is copied from the h2 selector. */
+.title {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin: 1rem 0;
+  padding: 0 1rem;
+  background-color: #0000;
+  color: var(--text-color);
+  border: none;
+  outline: none;
+  font-size: 1.5rem;
+  font-weight: 700;
+  font-family: inherit;
+  text-align: left;
+}
+
+.rename {
+  width: auto;
+  padding: 0.5rem;
+  font-size: 0.8rem;
+}
+

@@ -40,14 +40,15 @@ import styles from "./Track.module.css";
   @param {Object} props
   @param {string[] | string} props.artist
   @param {string} props.name
+  @param {string} props.thumbnail
   @param {boolean} props.inPlaylist
   @param {(e: PointerEvent) => void} props.onButtonClick
   @returns {JSX.Element}
 */
-function Track({artist, name, inPlaylist, onButtonClick}) {
+function Track({artist, name, thumbnail, inPlaylist, onButtonClick}) {
   return (
     <div className={styles.track}>
-      <img className={styles.thumbnail} src="" alt="" />
+      <img className={styles.thumbnail} src={thumbnail} alt="" />
       <div className={styles.info}>
         <h3 className={styles.title}>{name}</h3>
         <p className={styles.author}>by {artist}</p>

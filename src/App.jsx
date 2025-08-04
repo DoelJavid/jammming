@@ -18,33 +18,6 @@ import SearchBar from "./components/SearchBar";
 function App() {
   getAccessToken();
 
-  // Hardcoded array of tracks to test the track list.
-  // const [tracklist, setTracklist] = useState([
-  //   {
-  //     name: "Albuquerque",
-  //     artist: "\"Weird Al\" Yankovic",
-  //     album: "Running With Scissors",
-  //     id: "2Ec0liSMY2h4XORHyzKCmY"
-  //   },
-  //   {
-  //     name: "Everything You Know Is Wrong",
-  //     artist: "\"Weird Al\" Yankovic",
-  //     album: "Bad Hair Day",
-  //     id: "3bEIbBCkFaqzvtWjKdQ74c"
-  //   },
-  //   {
-  //     name: "Polka Face",
-  //     artist: "\"Weird Al\" Yankovic",
-  //     album: "Alpocalypse",
-  //     id: "2ELqO1C2U6vhg1BfYp7QhG"
-  //   },
-  //   {
-  //     name: "White & Nerdy",
-  //     artist: "\"Weird Al\" Yankovic",
-  //     album: "Straight Outta Lynwood",
-  //     id: "60R2v9lheAu3lwZwAFxMZK"
-  //   }
-  // ]);
   const [query, setQuery] = useState("");
   const [playlist, setPlaylist] = useState([]);
   const [playlistName, setPlaylistName] = useState("Your Playlist");
