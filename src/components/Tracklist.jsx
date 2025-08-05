@@ -29,6 +29,7 @@ function Tracklist({tracks, inPlaylist, onInteract}) {
           <Track
             name={track.name}
             artist={track.artist}
+            thumbnail={track.thumbnail}
             inPlaylist={inPlaylist}
             onButtonClick={() => onInteract(track)}
           />
